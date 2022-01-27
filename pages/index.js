@@ -34,7 +34,7 @@ function Titulo(props) {
 
 export default function PaginaInicial() {
 //  const username = 'PedroHenriqueCruzdaSilva';
-  const [username, setUsername] = React.useState('PedroHenriqueCruzdaSilva');
+  const [username, setUsername] = React.useState('');
 
   const roteamento = useRouter();
 
