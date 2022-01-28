@@ -4,6 +4,7 @@ import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js';
 
 
+
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzM5MDYxMiwiZXhwIjoxOTU4OTY2NjEyfQ.FDC-FPJRoXv-0QzD_edB6tQSgJPRwat1TxD6q3wQAIc';
 const SUPABASE_URL = 'https://ttvgrvaugkvwtxucmifn.supabase.co';
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
