@@ -1,6 +1,12 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
+import { createClient } from '@supabase/supabase-js';
+
+
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzM5MDYxMiwiZXhwIjoxOTU4OTY2NjEyfQ.FDC-FPJRoXv-0QzD_edB6tQSgJPRwat1TxD6q3wQAIc';
+const SUPABASE_URL = 'https://ttvgrvaugkvwtxucmifn.supabase.co';
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
     const [mensagem, setMensagem] = React.useState('');
@@ -20,19 +26,40 @@ export default function ChatPage() {
 
     */
 
-    function handleNovaMensagem(novaMensagem) {
+    React.useEffect(() => {
+        supabaseClient
+          .from('mensagens')
+          .select('*')
+          .order('id', { ascending: false })
+          .then(({ data }) => {
+            console.log('Dados da consulta:', data);
+            setListaDeMensagens(data);
+          });
+      }, []);
+    
+      function handleNovaMensagem(novaMensagem) {
         const mensagem = {
-            id: listaDeMensagens.length + 1,
-            de: 'Usuario' ,
-            texto: novaMensagem,
-        }
-        // chamada de um backend
-        setListaDeMensagens([
-            mensagem,
-            ...listaDeMensagens,
-        ]);
+          // id: listaDeMensagens.length + 1,
+          de: 'Usuario',
+          texto: novaMensagem,
+        };
+    
+        supabaseClient
+          .from('mensagens')
+          .insert([
+            // Tem que ser um objeto com os MESMOS CAMPOS que você escreveu no supabase
+            mensagem
+          ])
+          .then(({ data }) => {
+            console.log('Criando mensagem: ', data);
+            setListaDeMensagens([
+              data[0],
+              ...listaDeMensagens,
+            ]);
+          });
+    
         setMensagem('');
-    }
+      }
     return (
         <Box
             styleSheet={{
@@ -178,7 +205,7 @@ function MessageList(props) {
                                     display: 'inline-block',
                                     marginRight: '8px',
                                 }}
-                                src={`https://github.com/Usuario.png`}
+                                src={`https://github.com/${mensagem.de}.png`}
                             />
                             <Text tag="strong">
                                 {mensagem.de}
