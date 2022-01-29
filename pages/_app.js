@@ -23,6 +23,23 @@ function GlobalStyle() {
           flex: 1;
         }
         /* ./App fit Height */ 
+        /* SCHOLL BAR */
+
+        ::-webkit-scrollbar {
+            width: 0px;
+          }
+          
+          /* Track */
+          ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 0px grey; 
+            border-radius: 5px;
+          }
+          
+          /* Handle */
+          ::-webkit-scrollbar-thumb {
+            background: #131212b9; 
+            border-radius: 5px;
+          }
       `}</style>
     );
   }
